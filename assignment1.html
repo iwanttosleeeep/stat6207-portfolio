@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignment 1 - STAT6207 Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>STAT6207 Applied Deep Learning</h1>
+    <p class="subtitle">Coursework Portfolio</p>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="assignment1.html">Assignment 1</a>
+</nav>
+
+<main>
+  <div class="container">
+
+    <!-- ======== 1. OBJECTIVE ======== -->
+    <div class="section">
+      <h2>1. Objective</h2>
+      <p>
+        The assignment explores cat/dog image classification using pretrained encoders
+        as fixed feature extractors and KNN as the downstream classifier. It compares
+        three pretrained encoders and three distance measures to examine how
+        representation and distance choice affect classification results.
+      </p>
+    </div>
+
+    <!-- ======== 2. DATASET ======== -->
+    <div class="section">
+      <h2>2. Dataset</h2>
+      <h3>Main Dataset</h3>
+      <p>
+        Sourced from the <a href="https://zenodo.org/records/10997322">Dogs vs Cats subset on Zenodo</a>.
+      </p>
+      <ul>
+        <li><strong>Training set:</strong> 400 images &mdash; 200 cats and 200 dogs</li>
+        <li><strong>Test set:</strong> 10 unseen images &mdash; 5 cats and 5 dogs</li>
+      </ul>
+
+      <h3>Stress-Test Dataset</h3>
+      <p>
+        An additional 100 images from the
+        <a href="https://www.robots.ox.ac.uk/~vgg/data/pets/">Oxford-IIIT Pet Dataset</a>,
+        covering 37 distinct breeds (12 cat breeds, 25 dog breeds).
+        50 cats and 50 dogs, with 2&ndash;5 images per breed.
+      </p>
+    </div>
+
+    <!-- ======== 3. METHODOLOGY ======== -->
+    <div class="section">
+      <h2>3. Methodology</h2>
+
+      <figure class="figure">
+        <img src="assets/fig1_workflow.png" alt="Workflow: Training images -> Pretrained Encoder -> Feature Vectors -> KNN -> Prediction">
+        <figcaption>Figure 1: Overall classification workflow.</figcaption>
+      </figure>
+
+      <h3>Pretrained Encoders as Fixed Feature Extractors</h3>
+      <p>
+        Each image was passed through a pretrained model with the final classification
+        layer removed. The remaining layers acted as a fixed feature extractor, converting
+        each image into a high-dimensional feature vector. No weights were updated.
+      </p>
+
+      <h3>KNN Classifier</h3>
+      <p>
+        KNN is a lazy learner: it builds no mathematical model during training; it
+        simply memorizes the dataset and defers all computation to prediction time.
+        The k = 5 nearest neighbours were identified using the selected distance
+        measure, and the final prediction was determined by majority vote.
+      </p>
+
+      <table>
+        <caption>Encoder architectures and feature dimensions</caption>
+        <thead>
+          <tr><th>Encoder</th><th>Architecture</th><th>Feature Dimension</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ResNet-18</td><td>CNN</td><td>512</td></tr>
+          <tr><td>EfficientNet-B0</td><td>CNN</td><td>1280</td></tr>
+          <tr><td>ViT-B/16</td><td>Vision Transformer</td><td>768</td></tr>
+        </tbody>
+      </table>
+
+      <table>
+        <caption>Distance measures compared</caption>
+        <thead>
+          <tr><th>Measure</th><th>Definition</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cosine Similarity</td><td>Measures directional alignment, ignoring magnitude</td></tr>
+          <tr><td>Euclidean Distance</td><td>Straight-line geometric distance (L2 norm)</td></tr>
+          <tr><td>Manhattan Distance</td><td>Sum of absolute coordinate differences (L1 norm)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ======== 4. SIMILARITY RETRIEVAL ======== -->
+    <div class="section">
+      <h2>4. Similarity Retrieval</h2>
+      <p>
+        Using <code>cat.1.jpg</code> as the query, cosine similarity was computed
+        against all 399 other training images. The top-5 most similar images were
+        all cats; the top-5 most dissimilar were all dogs.
+      </p>
+
+      <figure class="figure">
+        <img src="assets/similarity_results.png" alt="Similarity retrieval results for cat.1.jpg">
+        <figcaption>Figure 2: Similarity retrieval for cat.1.jpg using ResNet-18 features and cosine similarity.</figcaption>
+      </figure>
+    </div>
+
+    <!-- ======== 5. 10-IMAGE TEST ======== -->
+    <div class="section">
+      <h2>5. Predictions on 10 Unseen Images</h2>
+      <p>
+        The KNN classifier (ResNet-18, cosine, k=5) was applied to the 10 unseen
+        test images. All 10 were correctly classified.
+      </p>
+
+      <div class="highlight">
+        <p>5-fold CV accuracy: 98.25% &plusmn; 1.00% (ResNet-18 + cosine similarity + k = 5).</p>
+      </div>
+
+      <figure class="figure">
+        <img src="assets/test_predictions.png" alt="Predictions on 10 unseen test images">
+        <figcaption>Figure 3: Predictions on the 10 unseen test images (ResNet-18, cosine similarity, k=5). All 10 correct.</figcaption>
+      </figure>
+    </div>
+
+    <!-- ======== 6. 3x3 COMPARISON ======== -->
+    <div class="section">
+      <h2>6. Encoder &times; Distance Comparison</h2>
+      <p>
+        All nine combinations were evaluated using 5-fold cross-validation on the
+        400 training images. All nine achieved 100% on the 10-image test set.
+      </p>
+
+      <table>
+        <caption>Table 1: Mean 5-fold CV accuracy (%) across encoders and distance measures</caption>
+        <thead>
+          <tr><th>Encoder</th><th>Cosine</th><th>Euclidean</th><th>Manhattan</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ResNet-18</td><td>98.25</td><td>98.25</td><td>98.50</td></tr>
+          <tr><td>EfficientNet-B0</td><td>98.25</td><td>98.25</td><td>98.75</td></tr>
+          <tr><td>ViT-B/16</td><td><strong>99.25</strong></td><td><strong>99.25</strong></td><td><strong>99.25</strong></td></tr>
+        </tbody>
+      </table>
+
+      <div class="highlight">
+        <p>
+          <strong>Key observations:</strong>
+          Cosine and Euclidean produced identical results on normalized vectors.
+          Manhattan distance produced different nearest-neighbour rankings, yielding
+          small accuracy improvements for ResNet-18 (+0.25%) and EfficientNet-B0 (+0.50%).
+          ViT-B/16 achieved the highest CV accuracy (99.25%) across all three measures.
+        </p>
+      </div>
+    </div>
+
+    <!-- ======== 7. STRESS TEST ======== -->
+    <div class="section">
+      <h2>7. Stress Test (100 Images, 37 Breeds)</h2>
+      <p>
+        The 100-image stress-test set was evaluated using
+        <strong>ResNet-18 with cosine similarity and k = 5 only</strong>.
+      </p>
+
+      <div class="highlight">
+        <p><strong>Overall accuracy: 99 / 100 = 99.00%</strong></p>
+      </div>
+
+      <ul>
+        <li>Cat images: 50/50 correctly classified (100%)</li>
+        <li>Dog images: 49/50 correctly classified (98%)</li>
+        <li>Keeshond: 50% (1/2 correct) &mdash; all other breeds: 100%</li>
+      </ul>
+
+      <p>
+        The single misclassification was <code>keeshond_117.jpg</code> (a Keeshond dog),
+        classified as cat. This case is analysed below.
+      </p>
+
+      <p style="color: var(--text-secondary); font-size: 0.9rem; font-style: italic;">
+        Note: The stress test was run with only one encoder&ndash;distance combination.
+        No comparisons across encoders or distances are possible on this set.
+      </p>
+    </div>
+
+    <!-- ======== 8. DIFFICULT CASE ======== -->
+    <div class="section">
+      <h2>8. Difficult Case: keeshond_117.jpg</h2>
+
+      <figure class="figure">
+        <img src="assets/keeshond_117.jpg" alt="keeshond_117.jpg" style="max-width: 280px; height: auto;">
+        <figcaption>The Keeshond image misclassified by ResNet-18 with cosine similarity.</figcaption>
+      </figure>
+
+      <h3>3 &times; 3 Prediction Table</h3>
+      <p>
+        The image was tested with all nine encoder&ndash;distance combinations.
+      </p>
+
+      <table>
+        <thead>
+          <tr><th>Encoder</th><th>Cosine</th><th>Euclidean</th><th>Manhattan</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ResNet-18</td>
+            <td class="incorrect">cat &cross;</td>
+            <td class="incorrect">cat &cross;</td>
+            <td class="correct">dog &check;</td>
+          </tr>
+          <tr>
+            <td>EfficientNet-B0</td>
+            <td class="incorrect">cat &cross;</td>
+            <td class="incorrect">cat &cross;</td>
+            <td class="correct">dog &check;</td>
+          </tr>
+          <tr>
+            <td>ViT-B/16</td>
+            <td class="correct">dog &check;</td>
+            <td class="correct">dog &check;</td>
+            <td class="correct">dog &check;</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Top-5 Nearest Neighbours (ResNet-18 + Cosine)</h3>
+      <table>
+        <thead>
+          <tr><th>Rank</th><th>Filename</th><th>Label</th><th>Cosine</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>dog.39.jpg</td><td class="correct">dog</td><td>0.7503</td></tr>
+          <tr><td>2</td><td>cat.139.jpg</td><td class="incorrect">cat</td><td>0.7441</td></tr>
+          <tr><td>3</td><td>cat.131.jpg</td><td class="incorrect">cat</td><td>0.7392</td></tr>
+          <tr><td>4</td><td>cat.36.jpg</td><td class="incorrect">cat</td><td>0.7378</td></tr>
+          <tr><td>5</td><td>dog.188.jpg</td><td class="correct">dog</td><td>0.7374</td></tr>
+        </tbody>
+      </table>
+
+      <div class="highlight">
+        <p>
+          With cosine similarity, three of the five nearest neighbours were cats,
+          resulting in a misclassification. Changing the distance measure to Manhattan
+          shifted the nearest neighbours, and the prediction changed to dog. ViT-B/16
+          features correctly classified the image with all three distance measures.
+          This single case illustrates that both the encoder (feature space) and the
+          distance measure can affect KNN predictions, but this observation is based
+          on one image and should not be generalised.
+        </p>
+      </div>
+
+      <figure class="figure">
+        <img src="assets/fig4_keeshond.png" alt="Keeshond analysis: prediction table and nearest neighbours">
+        <figcaption>Figure 4: Difficult-case analysis &mdash; prediction table and nearest neighbours.</figcaption>
+      </figure>
+    </div>
+
+    <!-- ======== 9. LIMITATIONS ======== -->
+    <div class="section">
+      <h2>9. Limitations</h2>
+      <ul>
+        <li>The 10-image test set is too small to draw statistically meaningful conclusions. All nine combinations achieved 100%.</li>
+        <li>The 100-image stress test was run with only one encoder&ndash;distance combination (ResNet-18 + Cosine).</li>
+        <li><code>keeshond_117.jpg</code> is a single example; the observed pattern should not be generalised.</li>
+        <li>CV accuracy differences between distance measures were small and within the standard deviation.</li>
+        <li>No runtime or efficiency measurements were performed.</li>
+      </ul>
+    </div>
+
+    <!-- ======== 10. CONCLUSION ======== -->
+    <div class="section">
+      <h2>10. Conclusion</h2>
+      <p>
+        In the experiment, pretrained models provided effective feature representations
+        for KNN-based cat/dog classification with the 400-image training set. ViT-B/16
+        achieved the highest CV accuracy (99.25%). Cosine and Euclidean distance
+        produced identical results on normalized features; Manhattan distance
+        produced different rankings that affected predictions on a single edge case.
+        Stronger conclusions would require larger and more diverse evaluation sets.
+      </p>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    STAT6207 Applied Deep Learning &middot; Coursework Portfolio
+  </div>
+</footer>
+
+</body>
+</html>
