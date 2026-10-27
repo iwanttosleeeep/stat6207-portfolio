@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Assignment 1 - STAT6207 Portfolio</title>
+  <meta name="description" content="Pretrained image encoders and KNN for cat/dog classification: methods, cross-validation results, stress testing and limitations.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +12,7 @@
 <header>
   <div class="container">
     <h1>STAT6207 Applied Deep Learning</h1>
-    <p class="subtitle">Coursework Portfolio</p>
+    <p class="subtitle">Coursework Portfolio &middot; Assignment 1</p>
   </div>
 </header>
 
@@ -25,8 +26,13 @@
 <main>
   <div class="container">
 
+    <div class="page-intro">
+      <h2>Pretrained Image Encoders &amp; KNN Classification</h2>
+      <p><a href="https://github.com/iwanttosleeeep/stat6207-portfolio/tree/main/code/assignment1">Browse assignment code &rarr;</a></p>
+    </div>
+
     <!-- ======== 1. OBJECTIVE ======== -->
-    <div class="section">
+    <section class="section">
       <h2>1. Objective</h2>
       <p>
         The assignment explores cat/dog image classification using pretrained encoders
@@ -34,10 +40,10 @@
         three pretrained encoders and three distance measures to examine how
         representation and distance choice affect classification results.
       </p>
-    </div>
+    </section>
 
     <!-- ======== 2. DATASET ======== -->
-    <div class="section">
+    <section class="section">
       <h2>2. Dataset</h2>
       <h3>Main Dataset</h3>
       <p>
@@ -55,14 +61,14 @@
         covering 37 distinct breeds (12 cat breeds, 25 dog breeds).
         50 cats and 50 dogs, with 2&ndash;5 images per breed.
       </p>
-    </div>
+    </section>
 
     <!-- ======== 3. METHODOLOGY ======== -->
-    <div class="section">
+    <section class="section">
       <h2>3. Methodology</h2>
 
       <figure class="figure">
-        <img src="assets/fig1_workflow.png" alt="Workflow: Training images -> Pretrained Encoder -> Feature Vectors -> KNN -> Prediction">
+        <img loading="lazy" src="assets/assignment1/fig1_workflow.png" alt="Workflow: Training images -> Pretrained Encoder -> Feature Vectors -> KNN -> Prediction">
         <figcaption>Figure 1: Overall classification workflow.</figcaption>
       </figure>
 
@@ -81,33 +87,33 @@
         measure, and the final prediction was determined by majority vote.
       </p>
 
-      <table>
+      <div class="table-scroll" role="region" tabindex="0" aria-label="Encoder architectures and feature dimensions"><table>
         <caption>Encoder architectures and feature dimensions</caption>
         <thead>
-          <tr><th>Encoder</th><th>Architecture</th><th>Feature Dimension</th></tr>
+          <tr><th scope="col">Encoder</th><th scope="col">Architecture</th><th scope="col">Feature Dimension</th></tr>
         </thead>
         <tbody>
-          <tr><td>ResNet-18</td><td>CNN</td><td>512</td></tr>
-          <tr><td>EfficientNet-B0</td><td>CNN</td><td>1280</td></tr>
-          <tr><td>ViT-B/16</td><td>Vision Transformer</td><td>768</td></tr>
+          <tr><th scope="row">ResNet-18</th><td>CNN</td><td>512</td></tr>
+          <tr><th scope="row">EfficientNet-B0</th><td>CNN</td><td>1280</td></tr>
+          <tr><th scope="row">ViT-B/16</th><td>Vision Transformer</td><td>768</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
-      <table>
+      <div class="table-scroll" role="region" tabindex="0" aria-label="Distance measures compared"><table>
         <caption>Distance measures compared</caption>
         <thead>
-          <tr><th>Measure</th><th>Definition</th></tr>
+          <tr><th scope="col">Measure</th><th scope="col">Definition</th></tr>
         </thead>
         <tbody>
-          <tr><td>Cosine Similarity</td><td>Measures directional alignment, ignoring magnitude</td></tr>
-          <tr><td>Euclidean Distance</td><td>Straight-line geometric distance (L2 norm)</td></tr>
-          <tr><td>Manhattan Distance</td><td>Sum of absolute coordinate differences (L1 norm)</td></tr>
+          <tr><th scope="row">Cosine Similarity</th><td>Measures directional alignment, ignoring magnitude</td></tr>
+          <tr><th scope="row">Euclidean Distance</th><td>Straight-line geometric distance (L2 norm)</td></tr>
+          <tr><th scope="row">Manhattan Distance</th><td>Sum of absolute coordinate differences (L1 norm)</td></tr>
         </tbody>
-      </table>
-    </div>
+      </table></div>
+    </section>
 
     <!-- ======== 4. SIMILARITY RETRIEVAL ======== -->
-    <div class="section">
+    <section class="section">
       <h2>4. Similarity Retrieval</h2>
       <p>
         Using <code>cat.1.jpg</code> as the query, cosine similarity was computed
@@ -116,13 +122,13 @@
       </p>
 
       <figure class="figure">
-        <img src="assets/similarity_results.png" alt="Similarity retrieval results for cat.1.jpg">
+        <img loading="lazy" src="assets/assignment1/similarity_results.png" alt="Similarity retrieval results for cat.1.jpg">
         <figcaption>Figure 2: Similarity retrieval for cat.1.jpg using ResNet-18 features and cosine similarity.</figcaption>
       </figure>
-    </div>
+    </section>
 
     <!-- ======== 5. 10-IMAGE TEST ======== -->
-    <div class="section">
+    <section class="section">
       <h2>5. Predictions on 10 Unseen Images</h2>
       <p>
         The KNN classifier (ResNet-18, cosine, k=5) was applied to the 10 unseen
@@ -134,30 +140,30 @@
       </div>
 
       <figure class="figure">
-        <img src="assets/test_predictions.png" alt="Predictions on 10 unseen test images">
+        <img loading="lazy" src="assets/assignment1/test_predictions.png" alt="Predictions on 10 unseen test images">
         <figcaption>Figure 3: Predictions on the 10 unseen test images (ResNet-18, cosine similarity, k=5). All 10 correct.</figcaption>
       </figure>
-    </div>
+    </section>
 
     <!-- ======== 6. 3x3 COMPARISON ======== -->
-    <div class="section">
+    <section class="section">
       <h2>6. Encoder &times; Distance Comparison</h2>
       <p>
         All nine combinations were evaluated using 5-fold cross-validation on the
         400 training images. All nine achieved 100% on the 10-image test set.
       </p>
 
-      <table>
+      <div class="table-scroll" role="region" tabindex="0" aria-label="Table 1: Mean 5-fold CV accuracy (%) across encoders and distance measures"><table>
         <caption>Table 1: Mean 5-fold CV accuracy (%) across encoders and distance measures</caption>
         <thead>
-          <tr><th>Encoder</th><th>Cosine</th><th>Euclidean</th><th>Manhattan</th></tr>
+          <tr><th scope="col">Encoder</th><th scope="col">Cosine</th><th scope="col">Euclidean</th><th scope="col">Manhattan</th></tr>
         </thead>
         <tbody>
-          <tr><td>ResNet-18</td><td>98.25</td><td>98.25</td><td>98.50</td></tr>
-          <tr><td>EfficientNet-B0</td><td>98.25</td><td>98.25</td><td>98.75</td></tr>
-          <tr><td>ViT-B/16</td><td><strong>99.25</strong></td><td><strong>99.25</strong></td><td><strong>99.25</strong></td></tr>
+          <tr><th scope="row">ResNet-18</th><td>98.25</td><td>98.25</td><td>98.50</td></tr>
+          <tr><th scope="row">EfficientNet-B0</th><td>98.25</td><td>98.25</td><td>98.75</td></tr>
+          <tr><th scope="row">ViT-B/16</th><td><strong>99.25</strong></td><td><strong>99.25</strong></td><td><strong>99.25</strong></td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="highlight">
         <p>
@@ -168,10 +174,10 @@
           ViT-B/16 achieved the highest CV accuracy (99.25%) across all three measures.
         </p>
       </div>
-    </div>
+    </section>
 
     <!-- ======== 7. STRESS TEST ======== -->
-    <div class="section">
+    <section class="section">
       <h2>7. Stress Test (100 Images, 37 Breeds)</h2>
       <p>
         The 100-image stress-test set was evaluated using
@@ -197,14 +203,14 @@
         Note: The stress test was run with only one encoder&ndash;distance combination.
         No comparisons across encoders or distances are possible on this set.
       </p>
-    </div>
+    </section>
 
     <!-- ======== 8. DIFFICULT CASE ======== -->
-    <div class="section">
+    <section class="section">
       <h2>8. Difficult Case: keeshond_117.jpg</h2>
 
       <figure class="figure">
-        <img src="assets/keeshond_117.jpg" alt="keeshond_117.jpg" style="max-width: 280px; height: auto;">
+        <img loading="lazy" src="assets/assignment1/keeshond_117.jpg" alt="keeshond_117.jpg" style="max-width: 280px; height: auto;">
         <figcaption>The Keeshond image misclassified by ResNet-18 with cosine similarity.</figcaption>
       </figure>
 
@@ -213,45 +219,47 @@
         The image was tested with all nine encoder&ndash;distance combinations.
       </p>
 
-      <table>
+      <div class="table-scroll" role="region" tabindex="0" aria-label="Difficult-case predictions across encoders and distance measures"><table>
+        <caption>Difficult-case predictions across encoders and distance measures</caption>
         <thead>
-          <tr><th>Encoder</th><th>Cosine</th><th>Euclidean</th><th>Manhattan</th></tr>
+          <tr><th scope="col">Encoder</th><th scope="col">Cosine</th><th scope="col">Euclidean</th><th scope="col">Manhattan</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td>ResNet-18</td>
+            <th scope="row">ResNet-18</th>
             <td class="incorrect">cat &cross;</td>
             <td class="incorrect">cat &cross;</td>
             <td class="correct">dog &check;</td>
           </tr>
           <tr>
-            <td>EfficientNet-B0</td>
+            <th scope="row">EfficientNet-B0</th>
             <td class="incorrect">cat &cross;</td>
             <td class="incorrect">cat &cross;</td>
             <td class="correct">dog &check;</td>
           </tr>
           <tr>
-            <td>ViT-B/16</td>
+            <th scope="row">ViT-B/16</th>
             <td class="correct">dog &check;</td>
             <td class="correct">dog &check;</td>
             <td class="correct">dog &check;</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h3>Top-5 Nearest Neighbours (ResNet-18 + Cosine)</h3>
-      <table>
+      <div class="table-scroll" role="region" tabindex="0" aria-label="Top-five nearest neighbours for the Keeshond image"><table>
+        <caption>Top-five nearest neighbours for the Keeshond image</caption>
         <thead>
-          <tr><th>Rank</th><th>Filename</th><th>Label</th><th>Cosine</th></tr>
+          <tr><th scope="col">Rank</th><th scope="col">Filename</th><th scope="col">Label</th><th scope="col">Cosine</th></tr>
         </thead>
         <tbody>
-          <tr><td>1</td><td>dog.39.jpg</td><td class="correct">dog</td><td>0.7503</td></tr>
-          <tr><td>2</td><td>cat.139.jpg</td><td class="incorrect">cat</td><td>0.7441</td></tr>
-          <tr><td>3</td><td>cat.131.jpg</td><td class="incorrect">cat</td><td>0.7392</td></tr>
-          <tr><td>4</td><td>cat.36.jpg</td><td class="incorrect">cat</td><td>0.7378</td></tr>
-          <tr><td>5</td><td>dog.188.jpg</td><td class="correct">dog</td><td>0.7374</td></tr>
+          <tr><th scope="row">1</th><td>dog.39.jpg</td><td class="correct">dog</td><td>0.7503</td></tr>
+          <tr><th scope="row">2</th><td>cat.139.jpg</td><td class="incorrect">cat</td><td>0.7441</td></tr>
+          <tr><th scope="row">3</th><td>cat.131.jpg</td><td class="incorrect">cat</td><td>0.7392</td></tr>
+          <tr><th scope="row">4</th><td>cat.36.jpg</td><td class="incorrect">cat</td><td>0.7378</td></tr>
+          <tr><th scope="row">5</th><td>dog.188.jpg</td><td class="correct">dog</td><td>0.7374</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="highlight">
         <p>
@@ -266,13 +274,13 @@
       </div>
 
       <figure class="figure">
-        <img src="assets/fig4_keeshond.png" alt="Keeshond analysis: prediction table and nearest neighbours">
+        <img loading="lazy" src="assets/assignment1/fig4_keeshond.png" alt="Keeshond analysis: prediction table and nearest neighbours">
         <figcaption>Figure 4: Difficult-case analysis &mdash; prediction table and nearest neighbours.</figcaption>
       </figure>
-    </div>
+    </section>
 
     <!-- ======== 9. LIMITATIONS ======== -->
-    <div class="section">
+    <section class="section">
       <h2>9. Limitations</h2>
       <ul>
         <li>The 10-image test set is too small to draw statistically meaningful conclusions. All nine combinations achieved 100%.</li>
@@ -281,10 +289,10 @@
         <li>CV accuracy differences between distance measures were small and within the standard deviation.</li>
         <li>No runtime or efficiency measurements were performed.</li>
       </ul>
-    </div>
+    </section>
 
     <!-- ======== 10. CONCLUSION ======== -->
-    <div class="section">
+    <section class="section">
       <h2>10. Conclusion</h2>
       <p>
         In the experiment, pretrained models provided effective feature representations
@@ -294,8 +302,9 @@
         produced different rankings that affected predictions on a single edge case.
         Stronger conclusions would require larger and more diverse evaluation sets.
       </p>
-    </div>
+    </section>
 
+    <p class="back-link"><a href="index.html">&larr; All assignments</a></p>
   </div>
 </main>
 
