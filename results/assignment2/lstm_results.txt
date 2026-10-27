@@ -1,0 +1,10 @@
+TARGET=Appliances
+FEATURES[uni]=['Appliances']
+LOOKBACK=24
+ARCH=1x50
+split: train 0-639 / val 640-799 / test 800-999; scaler=StandardScaler fit on train only
+optimizer=Adam lr=1e-3 batch=32 max_epochs=100 earlystopping_patience=10 (monitor val_loss, shuffle=False)
+val_MSE_orig=6045.8945 epochs=51
+TEST_MSE=7452.4446 TEST_RMSE=86.3275 TEST_MAE=48.9425 TEST_scaledMSE=0.452872
+PERSISTENCE_TEST_MSE=8743.0000
+TRAINMEAN_TEST_MSE=17773.1245 (constant c=train mean 113.8906)

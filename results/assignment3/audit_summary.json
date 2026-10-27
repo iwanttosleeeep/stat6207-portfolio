@@ -1,0 +1,46 @@
+{
+  "verdict": "no technical error found; discrepancy attributable to model quality / discriminative power, not an implementation bug",
+  "checks": {
+    "label_mapping": "0->M,1->F; verified by exact (40/40) reproduction of Phase-2 validation predictions",
+    "checkpoint_loading": "FaceNet classify=True,num_classes=2 matches saved logits; CNN build_cnn(arch) matches; load_state_dict strict ok; verify-val 40/40",
+    "normalization": "FaceNet mean=0.5/std=0.5; CNN uses saved train mean/std; identical to training configs",
+    "preprocessing": "inference detect=off == validation transform (facenet_transforms(train=False)/cnn_transforms(train=False))",
+    "exif_orientation": "none (0/128 images carry EXIF orientation)",
+    "file_validity": "128/128 JPEG RGB 160x160, all readable; MTCNN found a face in 128/128 when cross-checked"
+  },
+  "validation_discriminative_power": {
+    "facenet_F0": {
+      "true_male_mean_probF": 0.19571364870062097,
+      "true_female_mean_probF": 0.8485376328229904
+    },
+    "cnn_small": {
+      "true_male_mean_probF": 0.49380834549665453,
+      "true_female_mean_probF": 0.5355435952544212
+    }
+  },
+  "test_probability_distribution": {
+    "facenet_F0": {
+      "mean": 0.1782765625,
+      "median": 0.05935,
+      "very_confident_abs_gt0.4": 92,
+      "near_boundary_0.4_0.6": 2,
+      "predicted_F": 16,
+      "predicted_M": 112
+    },
+    "cnn_small": {
+      "mean": 0.4872671875,
+      "median": 0.48955000000000004,
+      "very_confident_abs_gt0.4": 0,
+      "near_boundary_0.4_0.6": 98,
+      "predicted_F": 60,
+      "predicted_M": 68
+    }
+  },
+  "model_agreement": {
+    "n": 128,
+    "agree": 78
+  },
+  "interpretation": "CNN outputs cluster at ~0.5 with no class separation on validation either, so its M/F split is near decision-boundary noise. FaceNet is strongly discriminative and confident; its M-skew is consistent with a male-skewed test distribution (model-derived, not ground truth). No threshold tuning or label inference performed.",
+  "ground_truth": "unavailable; no accuracy/F1 computed",
+  "action": "predictions preserved unchanged"
+}

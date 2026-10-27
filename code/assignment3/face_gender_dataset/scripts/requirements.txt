@@ -1,0 +1,13 @@
+# Python 3.14 (also fine on 3.11/3.12). Install with:
+#   python3 -m venv --system-site-packages .venv
+#   .venv/bin/pip install -r scripts/requirements.txt
+numpy==2.5.3
+pandas==3.0.6
+pyarrow==26.0.0
+Pillow==12.3.0
+matplotlib==3.11.2
+opencv-python-headless==4.11.0.86
+torch==2.14.1
+torchvision==0.29.1
+facenet-pytorch==2.6.0
+tqdm

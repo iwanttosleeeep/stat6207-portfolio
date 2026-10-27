@@ -1,0 +1,141 @@
+{
+  "selection_rule": "highest validation F1, tie-break lower val loss",
+  "best_model": "F0",
+  "models": [
+    {
+      "name": "F0",
+      "family": "FaceNet-InceptionResNetV1",
+      "params": 23483650,
+      "trainable_params": 1026,
+      "best_epoch": 10,
+      "train_time_sec": 34.7,
+      "val": {
+        "accuracy": 0.875,
+        "precision": 0.8260869565217391,
+        "recall": 0.95,
+        "f1": 0.8837209302325582,
+        "f1_macro": 0.8742928975487115,
+        "confusion_matrix": [
+          [
+            16,
+            4
+          ],
+          [
+            1,
+            19
+          ]
+        ],
+        "n": 40,
+        "loss": 0.3384141445159912
+      }
+    },
+    {
+      "name": "F2",
+      "family": "FaceNet-InceptionResNetV1",
+      "params": 23483650,
+      "trainable_params": 20770818,
+      "best_epoch": 8,
+      "train_time_sec": 71.4,
+      "val": {
+        "accuracy": 0.875,
+        "precision": 0.8571428571428571,
+        "recall": 0.9,
+        "f1": 0.8780487804878049,
+        "f1_macro": 0.8749218261413383,
+        "confusion_matrix": [
+          [
+            17,
+            3
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "n": 40,
+        "loss": 0.3470189243555069
+      }
+    },
+    {
+      "name": "F1",
+      "family": "FaceNet-InceptionResNetV1",
+      "params": 23483650,
+      "trainable_params": 10524162,
+      "best_epoch": 16,
+      "train_time_sec": 64.7,
+      "val": {
+        "accuracy": 0.875,
+        "precision": 0.8571428571428571,
+        "recall": 0.9,
+        "f1": 0.8780487804878049,
+        "f1_macro": 0.8749218261413383,
+        "confusion_matrix": [
+          [
+            17,
+            3
+          ],
+          [
+            2,
+            18
+          ]
+        ],
+        "n": 40,
+        "loss": 0.3765446960926056
+      }
+    },
+    {
+      "name": "cnn_small",
+      "family": "cnn_small",
+      "params": 287714,
+      "trainable_params": null,
+      "best_epoch": 4,
+      "train_time_sec": 39.9,
+      "val": {
+        "accuracy": 0.7,
+        "precision": 0.6818181818181818,
+        "recall": 0.75,
+        "f1": 0.7142857142857143,
+        "f1_macro": 0.6992481203007519,
+        "confusion_matrix": [
+          [
+            13,
+            7
+          ],
+          [
+            5,
+            15
+          ]
+        ],
+        "n": 40,
+        "loss": 0.6665148496627807
+      }
+    },
+    {
+      "name": "cnn_base",
+      "family": "cnn_base",
+      "params": 1173730,
+      "trainable_params": null,
+      "best_epoch": 3,
+      "train_time_sec": 40.7,
+      "val": {
+        "accuracy": 0.675,
+        "precision": 0.6666666666666666,
+        "recall": 0.7,
+        "f1": 0.6829268292682927,
+        "f1_macro": 0.6747967479674797,
+        "confusion_matrix": [
+          [
+            13,
+            7
+          ],
+          [
+            6,
+            14
+          ]
+        ],
+        "n": 40,
+        "loss": 0.6444487333297729
+      }
+    }
+  ]
+}
